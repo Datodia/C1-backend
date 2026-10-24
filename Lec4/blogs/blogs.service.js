@@ -29,7 +29,7 @@ exports.getAllBlogs = async (req, res) => {
 }
 
 exports.createBlog = async (req, res) => {
-    if(!req.body.title || !req.body.desc){
+    if(!req.body?.title || !req.body?.desc){
         return res.status(400).json({
             error: true,
             message: "title and desc is required"
@@ -61,12 +61,6 @@ exports.getBlogById = async (req, res) => {
 }
 
 exports.deleteBlogById = async (req, res) => {
-    if(!req.headers.role || req.headers.role !== 'admin'){
-        return res.status(403).json({
-            message: "Permition Denied"
-        })
-    }
-
     const id = Number(req.params.id)
     const blogs = await readFile('blogs.json', true)
     const index = blogs.findIndex((user) => user.id === id)
